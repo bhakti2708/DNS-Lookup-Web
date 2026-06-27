@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DNS Lookup Tool</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>🌐 DNS Lookup Tool</h1>
+
+        <p>Fast DNS Records & WHOIS Checker</p>
+
+    </div>
+
+    <form method="POST">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                name="domain"
+                placeholder="Enter domain (example.com)"
+                value="{{ result.domain if result else '' }}"
+                required>
+
+            <button type="submit">
+
+                Lookup
+
+            </button>
+
+        </div>
+
+    </form>
+
+    {% if result %}
+
+    <div class="results">
+
+        <div class="card">
+
+            <h2>🌍 Domain</h2>
+
+            <p>{{ result.domain }}</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>🟢 A Records</h2>
+
+            {% if result.A %}
+
+                <ul>
+
+                {% for item in result.A %}
+
+                    <li>{{ item }}</li>
+
+                {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <span class="empty">No Record Found</span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="card">
+
+            <h2>🌐 AAAA Records</h2>
+
+            {% if result.AAAA %}
+
+                <ul>
+
+                {% for item in result.AAAA %}
+
+                    <li>{{ item }}</li>
+
+                {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <span class="empty">No Record Found</span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="card">
+
+            <h2>📧 MX Records</h2>
+
+            {% if result.MX %}
+
+                <ul>
+
+                {% for item in result.MX %}
+
+                    <li>{{ item }}</li>
+
+                {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <span class="empty">No Record Found</span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="card">
+
+            <h2>🛡️ Name Servers</h2>
+
+            {% if result.NS %}
+
+                <ul>
+
+                {% for item in result.NS %}
+
+                    <li>{{ item }}</li>
+
+                {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <span class="empty">No Record Found</span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="card">
+
+            <h2>🔗 CNAME</h2>
+
+            {% if result.CNAME %}
+
+                <ul>
+
+                {% for item in result.CNAME %}
+
+                    <li>{{ item }}</li>
+
+                {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <span class="empty">No Record Found</span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="card">
+
+            <h2>📝 TXT Records</h2>
+
+            {% if result.TXT %}
+
+                <ul>
+
+                {% for item in result.TXT %}
+
+                    <li>{{ item }}</li>
+
+                {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <span class="empty">No Record Found</span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="card">
+
+            <h2>👤 WHOIS</h2>
+
+            <p><strong>Registrar:</strong> {{ result.whois.registrar }}</p>
+
+            <p><strong>Created:</strong> {{ result.whois.creation }}</p>
+
+            <p><strong>Expiry:</strong> {{ result.whois.expiry }}</p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
